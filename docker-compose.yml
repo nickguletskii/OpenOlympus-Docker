@@ -1,0 +1,62 @@
+openolympusweb:
+  build: openolympus-web-docker
+  command: /usr/sbin/startDockerContainer
+  links:
+   - "xtreemfsdir"
+   - "xtreemfsmrc"
+   - "xtreemfsosd"
+   - "database"
+   - "jppfserver"
+  ports:
+   - "8080:8080"
+  environment:
+   - dbAddress=database
+   - dbPassword=
+   - serverPort=8080
+   - remoteAddress=localhost
+   - persistentTokenKey=openolympus
+   - enableCaptcha=false
+   - recaptchaPublicKey=
+   - recaptchaPrivateKey=
+   - emailHost=
+   - emailHostPort=25
+   - emailProtocol=smtp
+   - emailLogin=
+   - emailPassword=
+  privileged: true
+xtreemfsdir:
+  build: xtreemfs-docker/xtreemfs-dir
+  ports:
+   - "32638:32638"
+   - "30638:30638"
+  volumes:
+   - /opt/openolympus/xtreemfs_data:/xtreemfs_data
+xtreemfsmrc:
+  build: xtreemfs-docker/xtreemfs-mrc
+  links:
+   - "xtreemfsdir"
+  ports:
+   - "32636:32636"
+   - "30636:30636"
+  volumes:
+   - /opt/openolympus/xtreemfs_data:/xtreemfs_data
+xtreemfsosd:
+  build: xtreemfs-docker/xtreemfs-osd
+  links:
+   - "xtreemfsdir"
+  ports:
+   - "32640:32640"
+   - "30640:30640"
+  volumes:
+   - /opt/openolympus/xtreemfs_data:/xtreemfs_data
+database:
+  build: openolympus-postgres
+  environment:
+   - POSTGRES_PASSWORD=
+  ports:
+   - "5433:5432"
+jppfserver:
+  build: jppf-server
+  ports:
+   - "11111:11111"
+   - "11198:11198"
