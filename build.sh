@@ -1,9 +1,5 @@
  #! /bin/bash
- mkdir -p /opt/openolympus/xtreemfs_data/
- rsync openolympus-xtreemfs/* /opt/openolympus/xtreemfs_data/
- cd xtreemfs-docker
- ./build.sh
- cd ..
+ mkdir -p /opt/openolympus/storage/
  git clone http://github.com/nickguletskii/OpenOlympus-Cerberus
  git clone http://github.com/nickguletskii/OpenOlympus
  cd OpenOlympus-Cerberus

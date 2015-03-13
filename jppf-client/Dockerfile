@@ -17,12 +17,6 @@ RUN mkdir -p /opt/jppfnode/
 RUN rsync -r JPPF-4.2.5-node /opt/jppfnode/
 RUN chmod +x /opt/jppfnode/JPPF-4.2.5-node/startNode.sh
 
-RUN echo "deb http://download.opensuse.org/repositories/home:/xtreemfs/xUbuntu_14.04/ ./" >> /etc/apt/sources.list
-RUN bash -c "wget -q http://download.opensuse.org/repositories/home:/xtreemfs/xUbuntu_13.10/Release.key -O - | sudo apt-key add -"
-RUN sudo apt-get update
-
-RUN sudo apt-get -y install xtreemfs-client
-
 COPY config /opt/jppfnode/JPPF-4.2.5-node/config
 COPY runNode.sh /opt/jppfnode/JPPF-4.2.5-node/runNode.sh
 

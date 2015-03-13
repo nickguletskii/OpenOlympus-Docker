@@ -2,9 +2,6 @@ openolympusweb:
   build: openolympus-web-docker
   command: /usr/sbin/startDockerContainer
   links:
-   - "xtreemfsdir"
-   - "xtreemfsmrc"
-   - "xtreemfsosd"
    - "database"
    - "jppfserver"
   ports:
@@ -23,32 +20,8 @@ openolympusweb:
    - emailProtocol=smtp
    - emailLogin=
    - emailPassword=
-  privileged: true
-xtreemfsdir:
-  build: xtreemfs-docker/xtreemfs-dir
-  ports:
-   - "32638:32638"
-   - "30638:30638"
   volumes:
-   - /opt/openolympus/xtreemfs_data:/xtreemfs_data
-xtreemfsmrc:
-  build: xtreemfs-docker/xtreemfs-mrc
-  links:
-   - "xtreemfsdir"
-  ports:
-   - "32636:32636"
-   - "30636:30636"
-  volumes:
-   - /opt/openolympus/xtreemfs_data:/xtreemfs_data
-xtreemfsosd:
-  build: xtreemfs-docker/xtreemfs-osd
-  links:
-   - "xtreemfsdir"
-  ports:
-   - "32640:32640"
-   - "30640:30640"
-  volumes:
-   - /opt/openolympus/xtreemfs_data:/xtreemfs_data
+   - /opt/openolympus/storage:/opt/openolympus/storage
 database:
   build: openolympus-postgres
   environment:
@@ -65,7 +38,8 @@ jppfclient:
   build: jppf-client
   links:
    - "jppfserver"
-   - "xtreemfsosd"
-   - "xtreemfsmrc"
-   - "xtreemfsdir"
   privileged: true
+  volumes:
+   - /opt/openolympus/storage/tasks:/opt/openolympus/storage/tasks:ro
+   - /opt/openolympus/storage/solutions:/opt/openolympus/storage/solutions:ro
+   - /opt/openolympus/storage/tmp:/opt/openolympus/storage/tmp

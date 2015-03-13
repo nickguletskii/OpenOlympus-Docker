@@ -20,12 +20,6 @@ RUN apt-get -y install oracle-java8-installer g++ unzip rsync git \
     
 WORKDIR /install
 
-RUN git clone https://github.com/xtreemfs/xtreemfs.git
-WORKDIR xtreemfs
-RUN make server
-RUN make client
-RUN make install-client
-
 RUN mkdir /install/openolympus    
 
 RUN mkdir -p /opt/openolympus/storage
