@@ -60,3 +60,12 @@ jppfserver:
   ports:
    - "11111:11111"
    - "11198:11198"
+   - "11443:11443"
+jppfclient:
+  build: jppf-client
+  links:
+   - "jppfserver"
+   - "xtreemfsosd"
+   - "xtreemfsmrc"
+   - "xtreemfsdir"
+  privileged: true
