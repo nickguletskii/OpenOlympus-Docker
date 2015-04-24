@@ -7,7 +7,7 @@
  git pull
  mvn install
  cd ../OpenOlympus
- git checkout newdevelopment
+ git checkout development
  git pull
  mvn install
  cd ..
