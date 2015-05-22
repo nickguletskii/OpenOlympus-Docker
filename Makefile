@@ -2,9 +2,9 @@ create_directories:
 	mkdir -p /opt/openolympus/storage/
 	mkdir -p /opt/openolympus/docker/
 	mkdir -p /opt/OpenOlympus/go/
-pull-repos: create_directories
-	+@[ -d $(dir OpenOlympus-Cerberus) ] || git clone http://github.com/nickguletskii/OpenOlympus-Cerberus
-	+@[ -d $(dir OpenOlympus) ] || git clone http://github.com/nickguletskii/OpenOlympus
+pull-repos:
+	test -d OpenOlympus-Cerberus || git clone https://github.com/nickguletskii/OpenOlympus-Cerberus
+	test -d OpenOlympus ||git clone https://github.com/nickguletskii/OpenOlympus
 install-cerberus: pull-repos
 	cd OpenOlympus-Cerberus; \
 	git checkout development;\
