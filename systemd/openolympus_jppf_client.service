@@ -1,0 +1,22 @@
+[Unit]
+Description=JPPF node for OpenOlympus
+Requires=docker.service openolympus_jppf_server.service
+After=docker.service openolympus_jppf_server.service
+
+[Service]
+ExecStart=/usr/local/bin/systemd-docker run --name=jppf-client --rm \
+--link jppf-server:jppf-server \
+-v /opt/openolympus/storage/tasks:/opt/openolympus/storage/tasks:ro \
+-v /opt/openolympus/storage/solutions:/opt/openolympus/storage/solutions:ro \
+-v /opt/openolympus/storage/tmp:/opt/openolympus/storage/tmp \
+openolympus_jppf_client
+
+Restart=always
+RestartSec=20s
+Type=notify
+NotifyAccess=all
+TimeoutStartSec=120
+TimeoutStopSec=25
+
+[Install]
+WantedBy=multi-user.target

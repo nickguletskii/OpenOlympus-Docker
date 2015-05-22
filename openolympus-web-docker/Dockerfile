@@ -28,11 +28,10 @@ COPY openolympus.jar /opt/openolympus/openolympus.jar
 
 COPY jppf.properties /opt/openolympus/jppf.properties
 COPY openolympus.properties /opt/openolympus/openolympus.properties
-COPY startDockerContainer /usr/sbin/startDockerContainer
-
-RUN chmod +x /usr/sbin/startDockerContainer
 
 RUN ln -s /opt/openolympus/openolympus.properties /opt/openolympus/application.properties
 RUN ln -s /opt/openolympus/openolympus.properties /opt/openolympus/spring.properties
 
-CMD ["/usr/sbin/startDockerContainer"]
+WORKDIR /opt/openolympus/
+
+CMD ["/usr/bin/java", "-jar", "-Dlogging.file=/var/log/openolympus.log", "-Djppf.config=/opt/openolympus/jppf.properties", "/opt/openolympus/openolympus.jar"]

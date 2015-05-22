@@ -1,0 +1,13 @@
+dbAddress=database
+dbPassword=
+serverPort=8080
+remoteAddress=localhost
+persistentTokenKey=openolympus
+enableCaptcha=false
+recaptchaPublicKey=
+recaptchaPrivateKey=
+emailHost=
+emailHostPort=25
+emailProtocol=smtp
+emailLogin=
+emailPassword=

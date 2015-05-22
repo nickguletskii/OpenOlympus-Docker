@@ -1,0 +1,19 @@
+[Unit]
+Description=PostgreSQL database
+Requires=docker.service
+After=docker.service
+
+[Service]
+EnvironmentFile=/opt/openolympus/docker/env
+
+ExecStart=/usr/local/bin/systemd-docker run -e POSTGRES_PASSWORD=${dbPassword} --name=database --rm -p "5433:5432" openolympus_postgres
+
+Restart=always
+RestartSec=20s
+Type=notify
+NotifyAccess=all
+TimeoutStartSec=120
+TimeoutStopSec=25
+
+[Install]
+WantedBy=multi-user.target

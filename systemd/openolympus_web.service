@@ -1,0 +1,26 @@
+[Unit]
+Description=OpenOlympus web server
+Requires=docker.service openolympus_postgres.service openolympus_jppf_server.service
+After=docker.service openolympus_postgres.service openolympus_jppf_server.service
+
+[Service]
+EnvironmentFile=/opt/openolympus/docker/env
+
+ExecStart=/usr/local/bin/systemd-docker run \
+-e dbAddress=${dbAddress} -e dbPassword=${dbPassword} -e serverPort=${serverPort} -e remoteAddress=${remoteAddress} -e persistentTokenKey=${persistentTokenKey} -e enableCaptcha=${enableCaptcha} -e recaptchaPublicKey=${recaptchaPublicKey} -e recaptchaPrivateKey=${recaptchaPrivateKey} -e emailHost=${emailHost} -e emailHostPort=${emailHostPort} -e emailProtocol=${emailProtocol} -e emailLogin=${emailLogin} -e emailPassword=${emailPassword} \
+-v /opt/openolympus/storage:/opt/openolympus/storage \
+--name=openolympus --rm \
+-p "8080:8080" \
+--link database:database \
+--link jppf-server:jppf-server \
+openolympus_web
+
+Restart=always
+RestartSec=20s
+Type=notify
+NotifyAccess=all
+TimeoutStartSec=120
+TimeoutStopSec=25
+
+[Install]
+WantedBy=multi-user.target

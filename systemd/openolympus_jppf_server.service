@@ -1,0 +1,17 @@
+[Unit]
+Description=JPPF server for OpenOlympus
+Requires=docker.service
+After=docker.service
+
+[Service]
+ExecStart=/usr/local/bin/systemd-docker run --name=jppf-server --rm -p "11111:11111" -p "11198:11198" -p "11443:11443" openolympus_jppf_server
+
+Restart=always
+RestartSec=20s
+Type=notify
+NotifyAccess=all
+TimeoutStartSec=120
+TimeoutStopSec=25
+
+[Install]
+WantedBy=multi-user.target
