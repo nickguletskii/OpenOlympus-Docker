@@ -1,4 +1,11 @@
 #!/bin/bash
+echo "******CREATING DOCKER DATABASE******"
+gosu postgres postgres --single <<- EOSQL
+CREATE DATABASE openolympus WITH ENCODING='UTF8' OWNER=postgres LC_COLLATE='en_US.utf8' LC_CTYPE='en_US.utf8' CONNECTION LIMIT=-1;
+EOSQL
+echo "******DOCKER DATABASE CREATED******"
+echo "******SETTING PASSWORD******"
+
 if [ "$POSTGRES_PASSWORD" ]; then
 	echo "Postgresql password set!"
 else
@@ -21,3 +28,4 @@ host    all             all             ::1/128                 trust
 # password.
 host all all 0.0.0.0/0 md5
 EOS
+echo "*****PASSWORD SET, ACL FIXED*****"
