@@ -15,6 +15,8 @@ install-olympus: pull-repos install-cerberus
 	git checkout development;\
 	git pull;\
 	mvn install
+copy-olympus: install-olympus
+	cp OpenOlympus/target/openolympus-0.1.0-SNAPSHOT.jar openolympus-web-docker/openolympus.jar
 build-jppf-client:
 	cd jppf-client;\
 	docker build -t "openolympus_jppf_client" .
